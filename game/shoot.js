@@ -35,8 +35,31 @@ function shoot()
 function collisions()
 {
     bullet_collision();
+    ennemy_collision();
+    ennemy_bullet_collision();
+    player_ennemy_collision();
     player_collision();
     player_falling();
+}
+
+function ennemy_bullet_collision() {
+    for (var i = 0; i < player1.bullets.length; i++) {
+        if (Math.abs(player1.bullets[i].position.x - ennemy1.graphic.position.x) < 10 &&
+         Math.abs(player1.bullets[i].position.y - ennemy1.graphic.position.y) < 10) 
+            ennemy1.dead();
+    }
+}
+
+function player_ennemy_collision()
+{
+    if (Math.abs(player1.graphic.position.x - ennemy1.graphic.position.x) < 4 &&
+    Math.abs(player1.graphic.position.y - ennemy1.position.y) < 4) {
+        if (!touched)
+            player1.removeLife();
+        touched = true;
+    }
+    else
+        touched = false;
 }
 
 function bullet_collision()
@@ -63,10 +86,28 @@ function player_collision()
 
     if ( x > WIDTH )
         player1.graphic.position.x -= x - WIDTH;
+    if ( x < 0 )
+        player1.graphic.position.x -= x;
     if ( y < 0 )
         player1.graphic.position.y -= y;
     if ( y > HEIGHT )
         player1.graphic.position.y -= y - HEIGHT;
+
+}
+
+function ennemy_collision()
+{
+    var x = ennemy1.graphic.position.x + WIDTH / 2;
+    var y = ennemy1.graphic.position.y + HEIGHT / 2;
+
+    if ( x > WIDTH )
+        ennemy1.graphic.position.x -= x - WIDTH;
+    if ( x < 0 )
+        ennemy1.graphic.position.x -= x;
+    if ( y < 0 )
+        ennemy1.graphic.position.y -= y;
+    if ( y > HEIGHT )
+        ennemy1.graphic.position.y -= y - HEIGHT;
 
 }
 

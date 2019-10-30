@@ -25,6 +25,19 @@ var Player = function(name, color, position, direction) {
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), this.direction);
 };
 
+Player.prototype.removeLife = function () {
+    if (this.life > 1)
+      this.life -= 1;
+    else {
+        this.graphic.position.z = this.graphic.position.z-0.1;
+        //Nettoyage de la div container
+        $("#container").html("");
+        jQuery('#'+this.name+' >.life').text("Tu es mort !");
+        init();
+    }
+        
+}
+
 Player.prototype.accelerate = function (distance) {
     var max = 2;
 
@@ -56,7 +69,7 @@ Player.prototype.displayInfo = function () {
 }
 
 Player.prototype.turnRight = function (angle) {
-    this.direction += angle;
+    this.direction -= angle;
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), angle);
 };
 
