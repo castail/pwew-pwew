@@ -26,8 +26,11 @@ var Player = function(name, color, position, direction) {
 };
 
 Player.prototype.removeLife = function () {
-    if (this.life > 1)
-      this.life -= 1;
+    if (this.life > 1) {
+        this.life -= 1;
+        this.graphic.position.x = 0;
+        this.graphic.position.y = 0;
+    }
     else {
         this.graphic.position.z = this.graphic.position.z-0.1;
         //Nettoyage de la div container
